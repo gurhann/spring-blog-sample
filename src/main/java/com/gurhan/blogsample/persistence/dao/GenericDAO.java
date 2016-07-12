@@ -1,9 +1,8 @@
-package com.gurhan.blogsample.dao;
+package com.gurhan.blogsample.persistence.dao;
 
-import java.io.Serializable;
 import java.util.List;
 
-public interface GenericDAO<T extends Serializable> {
+public interface GenericDAO<T> {
 
 	public T findOne(long id);
 

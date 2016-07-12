@@ -1,14 +1,13 @@
-package com.gurhan.blogsample.dao.jpaimpl;
+package com.gurhan.blogsample.persistence.dao.jpa;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.gurhan.blogsample.dao.GenericDAO;
+import com.gurhan.blogsample.persistence.dao.GenericDAO;
 
-public abstract class GenericDAOImp<T extends Serializable> implements GenericDAO<T> {
+public abstract class GenericDAOImp<T> implements GenericDAO<T> {
 	private Class<T> clazz;
 
 	@PersistenceContext
