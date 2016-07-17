@@ -8,10 +8,8 @@ import org.springframework.stereotype.Service;
 import com.gurhan.blogsample.constant.Role;
 import com.gurhan.blogsample.persistence.dao.AuthoritiesDAO;
 import com.gurhan.blogsample.persistence.dao.UserDAO;
-import com.gurhan.blogsample.persistence.dao.VerificationTokenDAO;
 import com.gurhan.blogsample.persistence.model.Authorities;
 import com.gurhan.blogsample.persistence.model.User;
-import com.gurhan.blogsample.persistence.model.VerificationToken;
 import com.gurhan.blogsample.service.UserService;
 import com.gurhan.blogsample.validation.EmailExistException;
 import com.gurhan.blogsample.web.dto.UserDTO;
@@ -26,8 +24,6 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private AuthoritiesDAO authoritiesDAO;
 
-	@Autowired
-	private VerificationTokenDAO verificationTokenDAO;
 
 	@Override
 	public User registerNewUserAccount(UserDTO accountDTO) throws EmailExistException {
@@ -47,21 +43,6 @@ public class UserServiceImpl implements UserService {
 		return userDAO.findByEmail(user.getEmail());
 	}
 
-	@Override
-	public void createVerificationToken(User user, String token) {
-		VerificationToken myToken = new VerificationToken(token, user);
-		verificationTokenDAO.create(myToken);
-	}
-
-	@Override
-	public User getUser(String verificationToken) {
-		return verificationTokenDAO.findByToken(verificationToken).getUser();
-	}
-
-	@Override
-	public VerificationToken getVerificationToken(String verificationToken) {
-		return verificationTokenDAO.findByToken(verificationToken);
-	}
 
 	@Override
 	public void saveRegisteredUser(User user) {

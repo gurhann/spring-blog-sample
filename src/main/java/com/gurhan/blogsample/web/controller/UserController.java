@@ -1,5 +1,7 @@
 package com.gurhan.blogsample.web.controller;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,17 +30,22 @@ public class UserController {
 	private PasswordEncoder passwordEncoder;
 
 	@RequestMapping(value = "/user/registration", method = RequestMethod.GET)
-	public String showRegistrationForm(WebRequest request, Model model) {
-		UserDTO user = new UserDTO();
-		model.addAttribute("user", user);
-		return "registration";
+	public String showRegistrationForm(Principal principal, WebRequest request, Model model) {
+		if (principal == null) {
+			UserDTO user = new UserDTO();
+			model.addAttribute("user", user);
+			return "registration";
+		} else {
+			return "redirect:/";
+		}
+
 	}
 
 	@RequestMapping(value = "/user/registration", method = RequestMethod.POST)
 	public ModelAndView registerUserAccount(@ModelAttribute("user") @Valid UserDTO accountDTO, BindingResult result,
 			WebRequest req, Error errors) {
 		User registered = null;
-		
+
 		try {
 			if (!result.hasErrors()) {
 				registered = createUserAccount(accountDTO, result);

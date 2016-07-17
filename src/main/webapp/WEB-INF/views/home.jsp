@@ -1,5 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
@@ -17,6 +19,9 @@
 			code="click.register"></spring:message></a>
 	<a href="${pageContext.request.contextPath}/user/login"><spring:message
 			code="click.login"></spring:message></a>
+
+
+	<sec:authorize access="!hasRole('ROLE_USER')">asdasds</sec:authorize>
 
 </body>
 </html>
