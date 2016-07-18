@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <tiles:insertDefinition name="base.definition">
-	<tiles:putAttribute name="title">asdas</tiles:putAttribute>
+	<tiles:putAttribute name="title"><spring:message code="label.title.posts"></spring:message></tiles:putAttribute>
 	<tiles:putAttribute name="content">
 		<!-- Main Content -->
 		<div class="container">

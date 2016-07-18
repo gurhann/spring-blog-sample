@@ -8,10 +8,10 @@
         http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
 	<http>
 		<intercept-url pattern="/user/secure/**" access="hasRole('ROLE_USER')" />
-		<form-login login-page="/user/login" default-target-url="/user/secure/home"
+		<form-login login-page="/user/login" default-target-url="/index"
 			login-processing-url="/j_spring_security_check"
 			authentication-failure-url="/login_error" always-use-default-target="true" />
-		<logout logout-success-url="/" logout-url="/user/secure/logout" />
+		<logout logout-success-url="/index" logout-url="/user/secure/logout"/>
 	</http>
 	<authentication-manager>
 		<authentication-provider>

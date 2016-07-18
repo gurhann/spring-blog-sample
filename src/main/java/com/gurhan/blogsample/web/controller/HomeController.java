@@ -10,14 +10,14 @@ public class HomeController {
 
 	@RequestMapping(value = "/")
 	public String home() {
-		return "home";
+		return "posts";
 	}
 
 	@RequestMapping(value = "/user/login")
 	public String login(Principal principal) {
 		if (principal == null) {
 			return "login";
-		}else {
+		} else {
 			return "redirect:/";
 		}
 	}
@@ -26,8 +26,8 @@ public class HomeController {
 	public String loginError() {
 		return "loginError";
 	}
-	
-	@RequestMapping(value="/index")
+
+	@RequestMapping(value = "/index")
 	public String ss() {
 		return "posts";
 	}

@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+<spring:url value="/user/registration" var="registration"></spring:url>
+<spring:url value="/index" var="index"></spring:url>
+<spring:url value="/user/login" var="login"></spring:url>
+<spring:url value="/user/secure/logout" var="logout"></spring:url>
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
 	<div class="container-fluid">
@@ -17,10 +25,27 @@
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="index.html">Home</a></li>
-				<li><a href="about.html">About</a></li>
-				<li><a href="post.html">Sample Post</a></li>
+				<li><a href="${index}"><spring:message
+							code="label.title.posts"></spring:message></a></li>
+				<sec:authorize access="!hasRole('ROLE_USER')">
+					<li><a href="${registration}"><spring:message
+								code="label.register.title"></spring:message></a></li>
+					<li><a href="${login}"><spring:message
+								code="label.login.title"></spring:message></a></li>
+				</sec:authorize>
 				<li><a href="contact.html">Contact</a></li>
+				<sec:authorize access="hasRole('ROLE_USER')">
+					<li><a href="#"
+						onclick="document.forms['navigation.logout.form'].submit(); return false;">
+							<spring:message code="label.pages.logout"></spring:message>
+					</a>
+						<form action="${logout}" method="POST"
+							name="navigation.logout.form">
+							<input type="hidden" name="${_csrf.parameterName}"
+								value="${_csrf.token}" />
+
+						</form></li>
+				</sec:authorize>
 			</ul>
 		</div>
 		<!-- /.navbar-collapse -->
