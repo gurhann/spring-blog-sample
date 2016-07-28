@@ -12,6 +12,8 @@ public class UserDTO {
 
 	private static final long serialVersionUID = 1L;
 
+	private Long id;
+
 	@NotNull
 	@NotEmpty
 	private String firstName;
@@ -30,6 +32,18 @@ public class UserDTO {
 	@NotNull
 	@NotEmpty
 	private String email;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	public String getFirstName() {
 		return firstName;

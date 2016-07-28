@@ -1,59 +1,31 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <tiles:insertDefinition name="base.definition">
-	<tiles:putAttribute name="title"><spring:message code="label.title.posts"></spring:message></tiles:putAttribute>
+	<tiles:putAttribute name="title">
+		<spring:message code="label.title.posts"></spring:message>
+	</tiles:putAttribute>
 	<tiles:putAttribute name="content">
 		<!-- Main Content -->
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-					<div class="post-preview">
-						<a href="post.html">
-							<h2 class="post-title">Man must explore, and this is
-								exploration at its greatest</h2>
-							<h3 class="post-subtitle">Problems look mighty small from
-								150 miles up</h3>
-						</a>
-						<p class="post-meta">
-							Posted by <a href="#">Start Bootstrap</a> on September 24, 2014
-						</p>
-					</div>
-					<hr>
-					<div class="post-preview">
-						<a href="post.html">
-							<h2 class="post-title">I believe every human has a finite
-								number of heartbeats. I don't intend to waste any of mine.</h2>
-						</a>
-						<p class="post-meta">
-							Posted by <a href="#">Start Bootstrap</a> on September 18, 2014
-						</p>
-					</div>
-					<hr>
-					<div class="post-preview">
-						<a href="post.html">
-							<h2 class="post-title">Science has not yet mastered prophecy</h2>
-							<h3 class="post-subtitle">We predict too much for the next
-								year and yet far too little for the next ten.</h3>
-						</a>
-						<p class="post-meta">
-							Posted by <a href="#">Start Bootstrap</a> on August 24, 2014
-						</p>
-					</div>
-					<hr>
-					<div class="post-preview">
-						<a href="post.html">
-							<h2 class="post-title">Failure is not an option</h2>
-							<h3 class="post-subtitle">Many say exploration is part of
-								our destiny, but itâs actually our duty to future generations.</h3>
-						</a>
-						<p class="post-meta">
-							Posted by <a href="#">Start Bootstrap</a> on July 8, 2014
-						</p>
-					</div>
-					<hr>
+
+					<c:forEach var="post" items="${posts}">
+						<div class="post-preview">
+							<a href="post.html">
+								<h2 class="post-title">${post.title}</h2>
+								<h3 class="post-subtitle">${post.text}</h3>
+							</a>
+							<p class="post-meta">
+								Posted by <a href="${pageContext.request.contextPath}/user/${post.user.id}">${post.user.firstName} ${post.user.lastName}</a> <fmt:formatDate value="${post.date}" pattern="dd/MM/yyyy"/>
+							</p>
+						</div>
+						<hr>
+					</c:forEach>
 					<!-- Pager -->
 					<ul class="pager">
 						<li class="next"><a href="#">Older Posts &rarr;</a></li>
