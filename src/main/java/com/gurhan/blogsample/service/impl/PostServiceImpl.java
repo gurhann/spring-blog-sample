@@ -27,4 +27,9 @@ public class PostServiceImpl implements PostService {
 		}
 		return result;
 	}
+
+	@Override
+	public PostDTO getPostById(Long id) {
+		return PostMapper.postModelToDTO(postDAO.findOne(id));
+	}
 }

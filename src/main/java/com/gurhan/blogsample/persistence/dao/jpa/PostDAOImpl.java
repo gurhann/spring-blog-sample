@@ -12,12 +12,16 @@ import com.gurhan.blogsample.persistence.model.Post;
 @Repository
 public class PostDAOImpl extends GenericDAOImp<Post> implements PostDAO {
 
+	public PostDAOImpl() {
+		setClazz(Post.class);
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Post> getAllPostByPage(int pageNumber) {
-		Query query = em.createNamedQuery(Post.GET_ALL_POST_BY_PAGE).setFirstResult(pageNumber-1).setMaxResults(pageNumber*5);
-		return (List<Post>)query.getResultList();
+		Query query = em.createNamedQuery(Post.GET_ALL_POST_BY_PAGE).setFirstResult(pageNumber - 1)
+				.setMaxResults(pageNumber * 5);
+		return (List<Post>) query.getResultList();
 	}
 
 }

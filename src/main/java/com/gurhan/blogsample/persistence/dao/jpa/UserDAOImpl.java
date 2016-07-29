@@ -1,6 +1,5 @@
 package com.gurhan.blogsample.persistence.dao.jpa;
 
-import javax.annotation.PostConstruct;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
@@ -8,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import com.gurhan.blogsample.persistence.dao.UserDAO;
 import com.gurhan.blogsample.persistence.model.User;
-import com.gurhan.blogsample.web.dto.UserDTO;
 
 @Repository
 public class UserDAOImpl extends GenericDAOImp<User> implements UserDAO {

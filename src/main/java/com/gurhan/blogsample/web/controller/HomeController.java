@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gurhan.blogsample.service.PostService;
@@ -19,7 +18,7 @@ public class HomeController {
 
 	@Autowired
 	private PostService postService;
-	
+
 	@RequestMapping(value = "/")
 	public String home() {
 		return "forward:/posts/1";
@@ -41,18 +40,23 @@ public class HomeController {
 
 	@RequestMapping(value = "/index")
 	public String ss() {
-		return "posts";
+		return "forward:/posts/1";
 	}
-	
+
 	@RequestMapping(value = "/posts/{page}", method = RequestMethod.GET)
-	public ModelAndView posts(@PathVariable(value="page") int page){
-		if(page < 1 ) {
+	public ModelAndView posts(@PathVariable(value = "page") int page) {
+		if (page < 1) {
 			return new ModelAndView("/posts/1");
 		}
 		List<PostDTO> postByPage = postService.getAllPostByPage(page);
-		
+
 		return new ModelAndView("/posts", "posts", postByPage);
 	}
-	
+
+	@RequestMapping(value = "/post/{id}", method = RequestMethod.GET)
+	public ModelAndView postById(@PathVariable("id") Long id) {
+		PostDTO postById = postService.getPostById(id);
+		return new ModelAndView("/post", "post", postById);
+	}
 
 }
