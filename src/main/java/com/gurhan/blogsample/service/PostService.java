@@ -11,4 +11,13 @@ public interface PostService {
 	public PostDTO getPostById(Long id);
 	
 	public List<PostDTO> getPostsByUser(Long userId, int pageNumber);
+	
+	public boolean isLastPage(int page);
+	
+	public boolean isLastPage(int page, int pageSize);
+	
+	public boolean isLastPageForUserPosts(Long userId, int page);
+	
+	public boolean isLastPageForUserPosts(Long userId, int page, int pageSize);
+
 }

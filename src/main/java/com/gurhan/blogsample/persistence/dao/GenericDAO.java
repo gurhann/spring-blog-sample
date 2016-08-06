@@ -15,4 +15,6 @@ public interface GenericDAO<T> {
 	public void delete(T entity);
 
 	public void deleteById(long id);
+	
+	public int getRowCount();
 }

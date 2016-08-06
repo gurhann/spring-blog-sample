@@ -20,10 +20,12 @@ import javax.persistence.TemporalType;
 @Table(name = "post")
 @NamedQueries({ 
 	@NamedQuery(name = Post.GET_ALL_POST_BY_PAGE, query = "select p from Post p order by p.date desc"),
-	@NamedQuery(name = Post.GET_POST_LIST_BY_USER, query = "select p from Post p where p.user.id=:userId order by p.date desc")})
+	@NamedQuery(name = Post.GET_POST_LIST_BY_USER, query = "select p from Post p where p.user.id=:userId order by p.date desc"),
+	@NamedQuery(name = Post.GET_USER_POST_COUNT, query = "select count(p.id) from Post p where p.user.id=:userId")})
 public class Post {
 	public static final String GET_ALL_POST_BY_PAGE = "getAllPostByPage";
 	public static final String GET_POST_LIST_BY_USER = "getPostListByUser";
+	public static final String GET_USER_POST_COUNT = "getUserPostCount";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

@@ -24,7 +24,7 @@ public abstract class GenericDAOImp<T> implements GenericDAO<T> {
 
 	@Override
 	public List<T> findAll() {
-		return em.createQuery("from" + clazz.getName()).getResultList();
+		return em.createQuery("from " + clazz.getName()).getResultList();
 	}
 
 	@Override
@@ -46,5 +46,10 @@ public abstract class GenericDAOImp<T> implements GenericDAO<T> {
 	public void deleteById(long id) {
 		T entity = em.find(clazz, id);
 		em.remove(entity);
+	}
+	
+	@Override
+	public int getRowCount() {
+		return ((Long)em.createQuery("select count(d.id) from " + clazz.getName() + " d").getSingleResult()).intValue();
 	}
 }

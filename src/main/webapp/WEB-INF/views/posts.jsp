@@ -1,14 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <tiles:insertDefinition name="base.definition">
 	<tiles:putAttribute name="title">
 		<spring:message code="label.title.posts"></spring:message>
 	</tiles:putAttribute>
 	<tiles:putAttribute name="content">
+		<spring:url var="nextPage" value="/posts/${currentPage+1}"></spring:url>
+		<spring:url var="previousPage" value="/posts/${currentPage-1}"></spring:url>
 		<!-- Main Content -->
 		<div class="container">
 			<div class="row">
@@ -30,7 +32,12 @@
 					</c:forEach>
 					<!-- Pager -->
 					<ul class="pager">
-						<li class="next"><a href="#">Older Posts &rarr;</a></li>
+						<c:if test="${currentPage != 1}">
+							<li class="previous"><a href="${previousPage}">&larr; Newest Posts</a></li>
+						</c:if>
+						<c:if test="${!isLastPage}">
+							<li class="next"><a href="${nextPage}">Older Posts &rarr;</a></li>
+						</c:if>
 					</ul>
 				</div>
 			</div>

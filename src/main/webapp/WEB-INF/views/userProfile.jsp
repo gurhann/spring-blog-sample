@@ -5,6 +5,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <tiles:insertDefinition name="base.definition">
+	<spring:url var="nextPage" value="/user/${user.id}/${currentPage+1}"></spring:url>
+	<spring:url var="previousPage" value="/user/${user.id}//${currentPage-1}"></spring:url>
 	<tiles:putAttribute name="header" value="/WEB-INF/views/user-header.jsp"></tiles:putAttribute>
 	<tiles:putAttribute name="title">
 		<spring:message code="label.title.posts"></spring:message>
@@ -31,7 +33,12 @@
 					</c:forEach>
 					<!-- Pager -->
 					<ul class="pager">
-						<li class="next"><a href="#">Older Posts &rarr;</a></li>
+						<c:if test="${currentPage != 1}">
+							<li class="previous"><a href="${previousPage}">&larr; Newest Posts</a></li>
+						</c:if>
+						<c:if test="${!isLastPage}">
+							<li class="next"><a href="${nextPage}">Older Posts &rarr;</a></li>
+						</c:if>
 					</ul>
 				</div>
 			</div>

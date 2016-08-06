@@ -30,8 +30,9 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
-	
-	@Autowired PostService postService;
+
+	@Autowired
+	PostService postService;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -66,22 +67,24 @@ public class UserController {
 		}
 		return new ModelAndView("successRegister", "user", accountDTO);
 	}
-	
+
 	@RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)
 	public String getUserById(@PathVariable(value = "userId") Long userId) {
-		return "forward:/user/"+userId+"/1";
+		return "forward:/user/" + userId + "/1";
 	}
-	
+
 	@RequestMapping(value = "/user/{userId}/{pageNumber}", method = RequestMethod.GET)
-	public String getUserById(@PathVariable(value = "userId") Long userId, @PathVariable(value = "pageNumber") int pageNumber, ModelMap model) {
+	public String getUserById(@PathVariable(value = "userId") Long userId,
+			@PathVariable(value = "pageNumber") int pageNumber, ModelMap model) {
 		UserDTO user = userService.findUserById(userId);
 		List<PostDTO> userPosts = postService.getPostsByUser(userId, pageNumber);
 		model.put("user", user);
 		model.put("userPosts", userPosts);
+		model.put("currentPage", pageNumber);
+		model.put("isLastPage", postService.isLastPageForUserPosts(userId, pageNumber));
 		return "userProfile";
 	}
 
-	
 	private User createUserAccount(UserDTO accountDTO, BindingResult result) {
 		User registered = null;
 		try {

@@ -32,4 +32,10 @@ public class PostDAOImpl extends GenericDAOImp<Post> implements PostDAO {
 		return (List<Post>) query.getResultList();
 	}
 
+	@Override
+	public int getUserPostRowCount(Long userId) {
+		return ((Long) em.createNamedQuery(Post.GET_USER_POST_COUNT).setParameter("userId", userId).getSingleResult()).intValue();
+	}
+	
+	
 }

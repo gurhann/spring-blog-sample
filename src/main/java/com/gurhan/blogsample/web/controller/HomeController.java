@@ -5,12 +5,17 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.gurhan.blogsample.persistence.dao.GenericDAO;
+import com.gurhan.blogsample.persistence.dao.PostDAO;
+import com.gurhan.blogsample.persistence.model.Post;
 import com.gurhan.blogsample.service.PostService;
+import com.gurhan.blogsample.util.QueryUtil;
 import com.gurhan.blogsample.web.dto.PostDTO;
 
 @Controller
@@ -44,13 +49,15 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/posts/{page}", method = RequestMethod.GET)
-	public ModelAndView posts(@PathVariable(value = "page") int page) {
+	public String posts(@PathVariable(value = "page") int page, ModelMap model) {
 		if (page < 1) {
-			return new ModelAndView("/posts/1");
+			return "/posts/1";
 		}
 		List<PostDTO> postByPage = postService.getAllPostByPage(page);
-
-		return new ModelAndView("/posts", "posts", postByPage);
+		model.put("posts", postByPage);
+		model.put("currentPage", page);
+		model.put("isLastPage", postService.isLastPage(page));
+		return "/posts";
 	}
 
 	@RequestMapping(value = "/post/{id}", method = RequestMethod.GET)

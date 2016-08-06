@@ -32,9 +32,43 @@ public class PostServiceImpl implements PostService {
 	public PostDTO getPostById(Long id) {
 		return PostMapper.postModelToDTO(postDAO.findOne(id));
 	}
-	
+
 	@Override
 	public List<PostDTO> getPostsByUser(Long userId, int pageNumber) {
 		return PostMapper.postListModelToDTO(postDAO.getPostListByUser(userId, pageNumber));
 	}
+
+	@Override
+	public boolean isLastPage(int page) {
+		int rowCount = postDAO.getRowCount();
+		return calcLastPage(page, 5, rowCount);
+	}
+
+	@Override
+	public boolean isLastPage(int page, int pageSize) {
+		int rowCount = postDAO.getRowCount();
+		return calcLastPage(page, pageSize, rowCount);
+	}
+
+	@Override
+	public boolean isLastPageForUserPosts(Long userId, int page) {
+		int rowCount = postDAO.getUserPostRowCount(userId);
+		return calcLastPage(page, 5, rowCount);
+	}
+
+	@Override
+	public boolean isLastPageForUserPosts(Long userId, int page, int pageSize) {
+		int rowCount = postDAO.getUserPostRowCount(userId);
+		return calcLastPage(page, pageSize, rowCount);
+	}
+
+	private boolean calcLastPage(int page, int pageSize, int rowCount) {
+		if (rowCount % pageSize == 0) {
+			return page == rowCount / pageSize;
+		} else {
+			return page == (rowCount / pageSize) + 1;
+		}
+	}
+
+	
 }
