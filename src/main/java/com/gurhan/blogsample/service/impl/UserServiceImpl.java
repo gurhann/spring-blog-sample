@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gurhan.blogsample.constant.Role;
+import com.gurhan.blogsample.mapper.UserMapper;
 import com.gurhan.blogsample.persistence.dao.AuthoritiesDAO;
 import com.gurhan.blogsample.persistence.dao.UserDAO;
 import com.gurhan.blogsample.persistence.model.Authorities;
@@ -24,6 +25,10 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private AuthoritiesDAO authoritiesDAO;
 
+	@Override
+	public UserDTO findUserById(Long id) {
+		return UserMapper.userModelToDTO(userDAO.findOne(id));
+	}
 
 	@Override
 	public User registerNewUserAccount(UserDTO accountDTO) throws EmailExistException {

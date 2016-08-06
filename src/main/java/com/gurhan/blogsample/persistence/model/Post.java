@@ -18,9 +18,12 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "post")
-@NamedQueries({ @NamedQuery(name = Post.GET_ALL_POST_BY_PAGE, query = "select p from Post p order by p.date desc") })
+@NamedQueries({ 
+	@NamedQuery(name = Post.GET_ALL_POST_BY_PAGE, query = "select p from Post p order by p.date desc"),
+	@NamedQuery(name = Post.GET_POST_LIST_BY_USER, query = "select p from Post p where p.user.id=:userId order by p.date desc")})
 public class Post {
 	public static final String GET_ALL_POST_BY_PAGE = "getAllPostByPage";
+	public static final String GET_POST_LIST_BY_USER = "getPostListByUser";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

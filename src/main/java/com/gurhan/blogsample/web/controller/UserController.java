@@ -1,6 +1,7 @@
 package com.gurhan.blogsample.web.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -8,16 +9,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gurhan.blogsample.persistence.model.User;
+import com.gurhan.blogsample.service.PostService;
 import com.gurhan.blogsample.service.UserService;
 import com.gurhan.blogsample.validation.EmailExistException;
+import com.gurhan.blogsample.web.dto.PostDTO;
 import com.gurhan.blogsample.web.dto.UserDTO;
 
 @Controller
@@ -25,6 +30,8 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired PostService postService;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -59,7 +66,22 @@ public class UserController {
 		}
 		return new ModelAndView("successRegister", "user", accountDTO);
 	}
+	
+	@RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)
+	public String getUserById(@PathVariable(value = "userId") Long userId) {
+		return "forward:/user/"+userId+"/1";
+	}
+	
+	@RequestMapping(value = "/user/{userId}/{pageNumber}", method = RequestMethod.GET)
+	public String getUserById(@PathVariable(value = "userId") Long userId, @PathVariable(value = "pageNumber") int pageNumber, ModelMap model) {
+		UserDTO user = userService.findUserById(userId);
+		List<PostDTO> userPosts = postService.getPostsByUser(userId, pageNumber);
+		model.put("user", user);
+		model.put("userPosts", userPosts);
+		return "userProfile";
+	}
 
+	
 	private User createUserAccount(UserDTO accountDTO, BindingResult result) {
 		User registered = null;
 		try {

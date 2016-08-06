@@ -6,4 +6,6 @@ import com.gurhan.blogsample.persistence.model.Post;
 
 public interface PostDAO extends GenericDAO<Post> {
 	public List<Post> getAllPostByPage(int pageNumber);
+	
+	public List<Post> getPostListByUser(Long userId,int pageNumber);
 }

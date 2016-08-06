@@ -32,4 +32,9 @@ public class PostServiceImpl implements PostService {
 	public PostDTO getPostById(Long id) {
 		return PostMapper.postModelToDTO(postDAO.findOne(id));
 	}
+	
+	@Override
+	public List<PostDTO> getPostsByUser(Long userId, int pageNumber) {
+		return PostMapper.postListModelToDTO(postDAO.getPostListByUser(userId, pageNumber));
+	}
 }
