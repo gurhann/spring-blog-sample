@@ -10,4 +10,5 @@ public interface PostDAO extends GenericDAO<Post> {
 	public List<Post> getPostListByUser(Long userId,int pageNumber);
 	
 	public int getUserPostRowCount(Long userId);
+	
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 import com.gurhan.blogsample.persistence.dao.GenericDAO;
 
@@ -27,21 +28,25 @@ public abstract class GenericDAOImp<T> implements GenericDAO<T> {
 		return em.createQuery("from " + clazz.getName()).getResultList();
 	}
 
+	@Transactional
 	@Override
 	public void create(T entity) {
 		em.persist(entity);
 	}
 
+	@Transactional
 	@Override
 	public T update(T entity) {
 		return em.merge(entity);
 	}
 
+	@Transactional
 	@Override
 	public void delete(T entity) {
 		em.remove(entity);
 	}
 
+	@Transactional
 	@Override
 	public void deleteById(long id) {
 		T entity = em.find(clazz, id);

@@ -12,6 +12,8 @@ public interface PostService {
 	
 	public List<PostDTO> getPostsByUser(Long userId, int pageNumber);
 	
+	public void createPost(PostDTO post);
+	
 	public boolean isLastPage(int page);
 	
 	public boolean isLastPage(int page, int pageSize);

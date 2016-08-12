@@ -1,28 +1,31 @@
 package com.gurhan.blogsample.web.controller;
 
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.gurhan.blogsample.persistence.dao.GenericDAO;
-import com.gurhan.blogsample.persistence.dao.PostDAO;
-import com.gurhan.blogsample.persistence.model.Post;
 import com.gurhan.blogsample.service.PostService;
-import com.gurhan.blogsample.util.QueryUtil;
+import com.gurhan.blogsample.service.UserService;
 import com.gurhan.blogsample.web.dto.PostDTO;
+import com.gurhan.blogsample.web.dto.UserDTO;
 
 @Controller
 public class HomeController {
 
 	@Autowired
 	private PostService postService;
+
+	@Autowired
+	private UserService userService;
 
 	@RequestMapping(value = "/")
 	public String home() {
@@ -64,6 +67,22 @@ public class HomeController {
 	public ModelAndView postById(@PathVariable("id") Long id) {
 		PostDTO postById = postService.getPostById(id);
 		return new ModelAndView("/post", "post", postById);
+	}
+
+	@RequestMapping(value = "/secure/createPost", method = RequestMethod.GET)
+	public String createPost(ModelMap model) {
+		model.put("post", new PostDTO());
+		return "create-post";
+	}
+
+	@RequestMapping(value = "/secure/createPost", method = RequestMethod.POST)
+	public String createPost(@ModelAttribute(value = "post") PostDTO post, Principal principal) {
+		String userName = principal.getName();
+		UserDTO user = userService.findByUserName(userName);
+		post.setUser(user);
+		post.setDate(new Date());
+		postService.createPost(post);
+		return String.format("redirect:/user/%d/%d", user.getId(), 1);
 	}
 
 }

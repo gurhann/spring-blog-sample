@@ -33,6 +33,7 @@ public class PostMapper {
 		post.setUrl(postDTO.getUrl());
 		post.setUser(UserMapper.userDTOToModel(postDTO.getUser()));
 		post.setDate(postDTO.getDate());
+		post.setText(postDTO.getText());
 		return post;
 	}
 

@@ -53,6 +53,11 @@ public class UserServiceImpl implements UserService {
 	public void saveRegisteredUser(User user) {
 		userDAO.create(user);
 	}
+	
+	@Override
+	public UserDTO findByUserName(String userName) {
+		return UserMapper.userModelToDTO(userDAO.findByEmail(userName));
+	}
 
 	private boolean emailExist(String email) {
 		User user = userDAO.findByEmail(email);

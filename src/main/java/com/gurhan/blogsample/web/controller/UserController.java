@@ -49,7 +49,7 @@ public class UserController {
 
 	}
 
-	@RequestMapping(value = "/user/registration", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/registration", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
 	public ModelAndView registerUserAccount(@ModelAttribute("user") @Valid UserDTO accountDTO, BindingResult result,
 			WebRequest req, Error errors) {
 		User registered = null;

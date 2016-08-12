@@ -18,6 +18,7 @@
 						<spring:message code="label.login.title"></spring:message>
 					</p>
 					<form method="post" action="/blogsample/j_spring_security_check">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						<div class="row control-group">
 							<div class="form-group col-xs-12 floating-label-form-group controls">
 								<label>${email}</label> <input id="username" name="username" type="text"
