@@ -64,9 +64,12 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/post/{id}", method = RequestMethod.GET)
-	public ModelAndView postById(@PathVariable("id") Long id) {
+	public String postById(@PathVariable("id") Long id, ModelMap model, Principal principal) {
 		PostDTO postById = postService.getPostById(id);
-		return new ModelAndView("/post", "post", postById);
+		String userName = principal.getName();
+		model.put("post", postById);
+		model.put("isOwnUser", userName.equals(postById.getUser().getEmail()));
+		return "post";
 	}
 
 	@RequestMapping(value = "/secure/createPost", method = RequestMethod.GET)
@@ -84,5 +87,6 @@ public class HomeController {
 		postService.createPost(post);
 		return String.format("redirect:/user/%d/%d", user.getId(), 1);
 	}
+	
 
 }
