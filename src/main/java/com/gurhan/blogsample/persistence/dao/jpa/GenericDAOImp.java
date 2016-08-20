@@ -23,6 +23,7 @@ public abstract class GenericDAOImp<T> implements GenericDAO<T> {
 		return em.find(clazz, id);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> findAll() {
 		return em.createQuery("from " + clazz.getName()).getResultList();
