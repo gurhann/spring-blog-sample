@@ -6,6 +6,7 @@
 <spring:message var="title" code="label.post.title" ></spring:message>
 <spring:message var="text" code="label.post.text"></spring:message>
 <spring:message var ="postUpdateTitle" code="label.post.update"></spring:message>
+<spring:url value="/secure/updatePost" var="updatePost"></spring:url>
 <tiles:insertDefinition name="base.definition">
 	<spring:message var="title" code="label.post.title"></spring:message>
 	<spring:message var="text" code="label.post.text"></spring:message>
@@ -31,7 +32,7 @@
 			</div>
 
 			<div id="postUpdateModal" class="modal fade" role="dialog">
-				<div class="modal-dialog modal-lg"">
+				<div class="modal-dialog modal-lg">
 
 					<!-- Modal content-->
 					<div class="modal-content">
@@ -40,7 +41,7 @@
 							<h4 class="modal-title">${postUpdateTitle}</h4>
 						</div>
 						<div class="modal-body">
-							<form:form method="post" action="#" commandName="post">
+							<form:form method="post" action="${updatePost}" commandName="post">
 								<div class="row control-group">
 									<div class="form-group col-xs-12 floating-label-form-group controls">
 										<label>${title}</label>
@@ -56,9 +57,10 @@
 
 									</div>
 								</div>
+								<form:input type="hidden" path="id" value="${post.id}"></form:input>
 								<div class="row control-group">
 									<div class="form-group col-xs-12">
-										<button type="submit" class="btn btn-default" id="createPostUpdateButton">
+										<button type="submit" class="btn btn-default" id="updatePostButton">
 											<spring:message code="label.form.save"></spring:message>
 										</button>
 									</div>
@@ -66,7 +68,7 @@
 							</form:form>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
 						</div>
 					</div>
 

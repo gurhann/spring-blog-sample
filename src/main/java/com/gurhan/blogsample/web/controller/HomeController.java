@@ -87,6 +87,14 @@ public class HomeController {
 		postService.createPost(post);
 		return String.format("redirect:/user/%d/%d", user.getId(), 1);
 	}
-	
+
+	@RequestMapping(value = "/secure/updatePost", method = RequestMethod.POST)
+	public String updatePost(@ModelAttribute(value = "post") PostDTO post) {
+		PostDTO oldPost = postService.getPostById(post.getId());
+		oldPost.setTitle(post.getTitle());
+		oldPost.setText(post.getText());
+		postService.updatePost(oldPost);
+		return "redirect:/post/" + post.getId();
+	}
 
 }

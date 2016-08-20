@@ -14,6 +14,8 @@ public interface PostService {
 	
 	public void createPost(PostDTO post);
 	
+	public void updatePost(PostDTO post);
+	
 	public boolean isLastPage(int page);
 	
 	public boolean isLastPage(int page, int pageSize);

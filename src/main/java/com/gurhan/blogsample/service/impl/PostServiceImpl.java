@@ -38,6 +38,10 @@ public class PostServiceImpl implements PostService {
 		postDAO.create(PostMapper.postDTOToModel(post));
 	}
 	
+	public void updatePost(PostDTO post){
+		postDAO.update(PostMapper.postDTOToModel(post));
+	}
+	
 	@Override
 	public List<PostDTO> getPostsByUser(Long userId, int pageNumber) {
 		return PostMapper.postListModelToDTO(postDAO.getPostListByUser(userId, pageNumber));

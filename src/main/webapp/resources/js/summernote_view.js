@@ -27,4 +27,8 @@ $(document).ready(function() {
 		var val = $("#updatePostTextStr").val();
 		$("#summernotePostUpdate").summernote("code", val);
 	});
+	$("#updatePostButton").click(function(){
+		var markupStr = $("#summernotePostUpdate").summernote('code');
+		$("#updatePostTextStr").val(markupStr);
+	});
 });
