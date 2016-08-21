@@ -18,7 +18,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "comment")
-@NamedQueries({@NamedQuery(name = Comment.GET_COMMENT_BY_POST_ID, query = "select c from comment c where c.post.id=:postId order by c.date desc")})
+@NamedQueries({@NamedQuery(name = Comment.GET_COMMENT_BY_POST_ID, query = "select c from Comment c where c.post.id=:postId order by c.date desc")})
 public class Comment {
 
 	public final static String GET_COMMENT_BY_POST_ID = "getComentsByPostId";
