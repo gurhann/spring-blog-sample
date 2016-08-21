@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.gurhan.blogsample.service.CommentService;
 import com.gurhan.blogsample.service.PostService;
 import com.gurhan.blogsample.service.UserService;
 import com.gurhan.blogsample.util.ControllerUtil;
+import com.gurhan.blogsample.web.dto.CommentDTO;
 import com.gurhan.blogsample.web.dto.PostDTO;
 import com.gurhan.blogsample.web.dto.UserDTO;
 
@@ -26,6 +28,9 @@ public class HomeController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private CommentService commentService;
 
 	@RequestMapping(value = "/")
 	public String home() {
@@ -66,9 +71,11 @@ public class HomeController {
 	@RequestMapping(value = "/post/{id}", method = RequestMethod.GET)
 	public String postById(@PathVariable("id") Long id, ModelMap model, Principal principal) {
 		PostDTO postById = postService.getPostById(id);
+		List<CommentDTO> comments = commentService.getCommentsByPostId(id);
 		String userName = ControllerUtil.getActiveUserName(principal);
 		model.put("post", postById);
 		model.put("isOwnUser", postById.getUser().getEmail().equals(userName));
+		model.put("comments", comments);
 		return "post";
 	}
 

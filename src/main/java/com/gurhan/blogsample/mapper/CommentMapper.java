@@ -13,6 +13,7 @@ public class CommentMapper {
 		commentDTO.setPost(PostMapper.postModelToDTO(comment.getPost()));
 		commentDTO.setUser(UserMapper.userModelToDTO(comment.getUser()));
 		commentDTO.setText(comment.getText());
+		commentDTO.setDate(comment.getDate());
 		return commentDTO;
 	}
 
@@ -30,6 +31,7 @@ public class CommentMapper {
 		comment.setUser(UserMapper.userDTOToModel(commentDTO.getUser()));
 		comment.setPost(PostMapper.postDTOToModel(commentDTO.getPost()));
 		comment.setText(commentDTO.getText());
+		comment.setDate(commentDTO.getDate());
 		return comment;
 	}
 

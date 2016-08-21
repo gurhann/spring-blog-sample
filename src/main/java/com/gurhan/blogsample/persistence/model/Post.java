@@ -1,6 +1,7 @@
 package com.gurhan.blogsample.persistence.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,16 +13,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "post")
-@NamedQueries({ 
-	@NamedQuery(name = Post.GET_ALL_POST_BY_PAGE, query = "select p from Post p order by p.date desc"),
-	@NamedQuery(name = Post.GET_POST_LIST_BY_USER, query = "select p from Post p where p.user.id=:userId order by p.date desc"),
-	@NamedQuery(name = Post.GET_USER_POST_COUNT, query = "select count(p.id) from Post p where p.user.id=:userId")})
+@NamedQueries({ @NamedQuery(name = Post.GET_ALL_POST_BY_PAGE, query = "select p from Post p order by p.date desc"),
+		@NamedQuery(name = Post.GET_POST_LIST_BY_USER, query = "select p from Post p where p.user.id=:userId order by p.date desc"),
+		@NamedQuery(name = Post.GET_USER_POST_COUNT, query = "select count(p.id) from Post p where p.user.id=:userId") })
 public class Post {
 	public static final String GET_ALL_POST_BY_PAGE = "getAllPostByPage";
 	public static final String GET_POST_LIST_BY_USER = "getPostListByUser";
@@ -41,12 +42,15 @@ public class Post {
 	@Column(name = "url", length = 255)
 	private String url;
 
-	@Column(name = "text")
+	@Column(name = "text", columnDefinition="TEXT")
 	private String text;
 
 	@Column(name = "date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
+	private List<Comment> comments;
 
 	public Long getId() {
 		return id;
@@ -94,6 +98,14 @@ public class Post {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
 	}
 
 }

@@ -1,11 +1,14 @@
 package com.gurhan.blogsample.web.dto;
 
+import java.util.Date;
+
 public class CommentDTO {
 
 	private Long id;
 	private UserDTO user;
 	private PostDTO post;
 	private String text;
+	private Date date;
 
 	public Long getId() {
 		return id;
@@ -37,6 +40,14 @@ public class CommentDTO {
 
 	public void setPost(PostDTO post) {
 		this.post = post;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 }

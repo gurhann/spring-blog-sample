@@ -3,9 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<spring:message var="title" code="label.post.title" ></spring:message>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<spring:message var="title" code="label.post.title"></spring:message>
 <spring:message var="text" code="label.post.text"></spring:message>
-<spring:message var ="postUpdateTitle" code="label.post.update"></spring:message>
+<spring:message var="postUpdateTitle" code="label.post.update"></spring:message>
 <spring:url value="/secure/updatePost" var="updatePost"></spring:url>
 <tiles:insertDefinition name="base.definition">
 	<spring:message var="title" code="label.post.title"></spring:message>
@@ -22,13 +23,26 @@
 				<c:if test="${isOwnUser}">
 					<div class="row">
 						<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-							<button type="button" id="postUpdateButton" class="btn btn-info" data-toggle="modal" data-target="#postUpdateModal">Open
-								Modal</button>
-
-
+							<button type="button" id="postUpdateButton" class="btn btn-info" data-toggle="modal"
+								data-target="#postUpdateModal">Open Modal</button>
 						</div>
 					</div>
 				</c:if>
+				<br />
+				<c:forEach items="${comments}" var="comment">
+					<div class="row">
+						<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<strong>${comment.user.firstName} ${comment.user.lastName}</strong> <span
+										class="text-muted"><fmt:formatDate value="${comment.date}" pattern="dd/MM/yyyy"/></span>
+								</div>
+								<div class="panel-body">${comment.text}</div>
+								<!-- /panel-body -->
+							</div>
+						</div>
+					</div>
+				</c:forEach>
 			</div>
 
 			<div id="postUpdateModal" class="modal fade" role="dialog">
@@ -68,7 +82,7 @@
 							</form:form>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 						</div>
 					</div>
 
