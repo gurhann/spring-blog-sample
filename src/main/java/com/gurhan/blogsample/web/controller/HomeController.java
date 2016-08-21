@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.gurhan.blogsample.service.PostService;
 import com.gurhan.blogsample.service.UserService;
+import com.gurhan.blogsample.util.ControllerUtil;
 import com.gurhan.blogsample.web.dto.PostDTO;
 import com.gurhan.blogsample.web.dto.UserDTO;
 
@@ -66,9 +66,9 @@ public class HomeController {
 	@RequestMapping(value = "/post/{id}", method = RequestMethod.GET)
 	public String postById(@PathVariable("id") Long id, ModelMap model, Principal principal) {
 		PostDTO postById = postService.getPostById(id);
-		String userName = principal.getName();
+		String userName = ControllerUtil.getActiveUserName(principal);
 		model.put("post", postById);
-		model.put("isOwnUser", userName.equals(postById.getUser().getEmail()));
+		model.put("isOwnUser", postById.getUser().getEmail().equals(userName));
 		return "post";
 	}
 
@@ -80,7 +80,7 @@ public class HomeController {
 
 	@RequestMapping(value = "/secure/createPost", method = RequestMethod.POST)
 	public String createPost(@ModelAttribute(value = "post") PostDTO post, Principal principal) {
-		String userName = principal.getName();
+		String userName = ControllerUtil.getActiveUserName(principal);
 		UserDTO user = userService.findByUserName(userName);
 		post.setUser(user);
 		post.setDate(new Date());
