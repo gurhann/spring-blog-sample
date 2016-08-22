@@ -62,7 +62,7 @@
 
 	<!-- Theme JavaScript -->
 	<script src="${pageContext.request.contextPath}/resources/js/clean-blog.min.js"></script>
-
+	<script src="${pageContext.request.contextPath}/resources/js/clean-blog.js"></script>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/summernote_view.js"></script>
 

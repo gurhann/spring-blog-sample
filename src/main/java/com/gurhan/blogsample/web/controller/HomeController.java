@@ -28,7 +28,7 @@ public class HomeController {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private CommentService commentService;
 
@@ -76,6 +76,9 @@ public class HomeController {
 		model.put("post", postById);
 		model.put("isOwnUser", postById.getUser().getEmail().equals(userName));
 		model.put("comments", comments);
+		if (userName != null) {
+			model.put("comment", new CommentDTO());
+		}
 		return "post";
 	}
 
@@ -102,6 +105,15 @@ public class HomeController {
 		oldPost.setText(post.getText());
 		postService.updatePost(oldPost);
 		return "redirect:/post/" + post.getId();
+	}
+
+	@RequestMapping(value = "/secure/createComment", method = RequestMethod.POST)
+	public String createComment(@ModelAttribute(value = "comment") CommentDTO comment, Principal principal) {
+		comment.setPost(postService.getPostById(comment.getPost().getId()));
+		comment.setUser(userService.findByUserName(ControllerUtil.getActiveUserName(principal)));
+		comment.setDate(new Date());
+		commentService.addComment(comment);
+		return "redirect:/post/" + comment.getPost().getId();
 	}
 
 }

@@ -37,4 +37,8 @@ jQuery(document).ready(function($) {
                 this.previousTop = currentTop;
             });
     }
+    
+    $("#showCreateCommentButton").click(function() {
+    	$("#createCommentRow").toggle();
+    });
 });
