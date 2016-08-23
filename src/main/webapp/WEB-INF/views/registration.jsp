@@ -29,19 +29,21 @@
 								<label>${firstName}</label>
 								<form:input path="firstName" name="firstName" value="" class="form-control"
 									placeholder="${firstName}" />
+									<form:errors path="firstName" element="p" cssClass="text-danger"/>
 							</div>
 						</div>
 						<div class="row control-group">
 							<div class="form-group col-xs-12 floating-label-form-group controls">
 								<label>${lastName}</label>
 								<form:input path="lastName" id="sa" value="" class="form-control" placeholder="${lastName}" />
+								<form:errors path="lastName" element="p" cssClass="text-danger"/>
 							</div>
 						</div>
 						<div class="row control-group">
 							<div class="form-group col-xs-12 floating-label-form-group controls">
 								<label>${email}</label>
 								<form:input path="email" value="" class="form-control" placeholder="${email}" />
-								<form:errors path="email" element="div" />
+								<form:errors path="email" cssClass="text-danger" element="p"/>
 							</div>
 						</div>
 						<div class="row control-group">
@@ -49,7 +51,7 @@
 								<label>${password}</label>
 								<form:input path="password" value="" type="password" class="form-control"
 									placeholder="${password}" />
-								<form:errors path="password" element="div" />
+								<form:errors path="password" element="p" cssClass="text-danger"/>
 							</div>
 						</div>
 						<div class="row control-group">
@@ -57,7 +59,7 @@
 								<label>${confirmPass}</label>
 								<form:input path="matchingPassword" value="" type="password" class="form-control"
 									placeholder="${confirmPass}" />
-								<form:errors element="div" />
+								<form:errors path="matchingPassword" element="p" cssClass="text-danger"/>
 							</div>
 						</div>
 						<br />

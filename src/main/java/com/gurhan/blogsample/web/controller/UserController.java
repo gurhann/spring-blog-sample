@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,7 +61,12 @@ public class UserController {
 				registered = createUserAccount(accountDTO, result);
 			}
 			if (registered == null) {
-				result.rejectValue("email", "message.regError");
+				List<ObjectError> allErrors = result.getAllErrors();
+				for(ObjectError err : allErrors) {
+					if(!(err instanceof FieldError) && err instanceof ObjectError ) {
+						result.rejectValue("matchingPassword", "label.notequals.passwords");
+					}
+				}
 				throw new Exception();
 			}
 		} catch (Exception e) {

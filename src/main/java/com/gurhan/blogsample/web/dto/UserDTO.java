@@ -14,23 +14,24 @@ public class UserDTO {
 
 	private Long id;
 
-	@NotNull
-	@NotEmpty
+	@NotNull(message = "{label.firstname.notnull}")
+	@NotEmpty(message = "{label.firstname.notnull}")
 	private String firstName;
 
-	@NotNull
-	@NotEmpty
+	@NotNull(message = "{label.lastname.notnull}")
+	@NotEmpty(message = "{label.lastname.notnull}")
 	private String lastName;
 
-	@NotNull
-	@NotEmpty
+	@NotNull(message = "{label.password.notnull}")
+	@NotEmpty(message = "{label.password.notnull}")
 	private String password;
-
+	
+		
 	private String matchingPassword;
 
-	@ValidEmail
-	@NotNull
-	@NotEmpty
+	@NotNull(message = "{label.email.notnull}")
+	@NotEmpty(message = "{label.email.notnull}")
+	@ValidEmail(message = "{label.not.email}")
 	private String email;
 
 	public Long getId() {
