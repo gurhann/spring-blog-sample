@@ -42,15 +42,7 @@
 
 <body>
 
-
-	<tiles:insertAttribute name="navigation"></tiles:insertAttribute>
-	<tiles:insertAttribute name="header"></tiles:insertAttribute>
-	<tiles:insertAttribute name="content"></tiles:insertAttribute>
-	<tiles:insertAttribute name="footer"></tiles:insertAttribute>
-
-
-
-	<!-- jQuery -->
+<!-- jQuery -->
 	<script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
 
 	<!-- Bootstrap Core JavaScript -->
@@ -65,6 +57,15 @@
 	<script src="${pageContext.request.contextPath}/resources/js/clean-blog.js"></script>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/summernote_view.js"></script>
+	
+	<tiles:insertAttribute name="navigation"></tiles:insertAttribute>
+	<tiles:insertAttribute name="header"></tiles:insertAttribute>
+	<tiles:insertAttribute name="content"></tiles:insertAttribute>
+	<tiles:insertAttribute name="footer"></tiles:insertAttribute>
+
+
+
+	
 
 </body>
 
