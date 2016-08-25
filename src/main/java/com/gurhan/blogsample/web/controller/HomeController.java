@@ -4,9 +4,12 @@ import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -85,11 +88,18 @@ public class HomeController {
 	@RequestMapping(value = "/secure/createPost", method = RequestMethod.GET)
 	public String createPost(ModelMap model) {
 		model.put("post", new PostDTO());
+		model.put("operType", "CREATE");
 		return "create-post";
 	}
 
 	@RequestMapping(value = "/secure/createPost", method = RequestMethod.POST)
-	public String createPost(@ModelAttribute(value = "post") PostDTO post, Principal principal) {
+	public String createPost(@ModelAttribute(value = "post") @Valid PostDTO post, BindingResult result,
+			Principal principal, ModelMap model) {
+		if (result.hasErrors()) {
+			model.put("post", post);
+			model.put("operType", "CREATE");
+			return "create-post";
+		}
 		String userName = ControllerUtil.getActiveUserName(principal);
 		UserDTO user = userService.findByUserName(userName);
 		post.setUser(user);
@@ -99,8 +109,14 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/secure/updatePost", method = RequestMethod.POST)
-	public String updatePost(@ModelAttribute(value = "post") PostDTO post) {
+	public String updatePost(@ModelAttribute(value = "post") @Valid PostDTO post, BindingResult result,
+			Principal principal, ModelMap model) {
 		PostDTO oldPost = postService.getPostById(post.getId());
+		if (result.hasErrors()) {
+			model.put("post", post);
+			model.put("operType", "UPDATE");
+			return "create-post";
+		}
 		oldPost.setTitle(post.getTitle());
 		oldPost.setText(post.getText());
 		postService.updatePost(oldPost);

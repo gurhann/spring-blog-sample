@@ -2,11 +2,21 @@ package com.gurhan.blogsample.web.dto;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class PostDTO {
 	private Long id;
 	private UserDTO user;
+	@NotNull(message = "{label.notnull.posttitle}")
+	@NotEmpty(message = "{label.notnull.posttitle}")
+	@Size(max = 255, message = "{label.max.posttitle}")
 	private String title;
 	private String url;
+	@NotNull(message = "{label.notnull.posttext}")
+	@NotEmpty(message = "{label.notnull.posttext}")
 	private String text;
 	private Date date;
 
