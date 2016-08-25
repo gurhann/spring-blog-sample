@@ -9,7 +9,11 @@ $(document).ready(function() {
 
 	$("#createPostButton").click(function() {
 		var markupStr = $('#summernote').summernote('code');
-		$("#postTextStr").val(markupStr);
+		if (markupStr == "<p><br></p>") {
+			$("#postTextStr").val("");
+		}else {
+			$("#postTextStr").val(markupStr);
+		}
 	});
 	$("#postUpdateButton").click(function() {
 		$("#summernotePostUpdate").summernote({
@@ -27,8 +31,12 @@ $(document).ready(function() {
 		var val = $("#updatePostTextStr").val();
 		$("#summernotePostUpdate").summernote("code", val);
 	});
-	$("#updatePostButton").click(function(){
+	$("#updatePostButton").click(function() {
 		var markupStr = $("#summernotePostUpdate").summernote('code');
-		$("#updatePostTextStr").val(markupStr);
+		if (markupStr == "<p><br></p>") {
+			$("#postTextStr").val("");
+		} else {
+			$("#updatePostTextStr").val(markupStr);
+		}
 	});
 });
